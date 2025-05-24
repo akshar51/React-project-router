@@ -31,7 +31,7 @@ const App = () => {
       localStorage.setItem("Employee", JSON.stringify(updatedList))
       setEditId(-1)
     }
-    
+    navigate("/view")
     setEmployee({});
   };
 
