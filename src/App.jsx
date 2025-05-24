@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import Header from "./components/Header";
 import Employee from "./components/Employee";
 import EmployeeData from "./components/EmployeeData";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 const App = () => {
   const [employee, setEmployee] = useState({});
   const [list, setList] = useState([]);
   const [editId,setEditId] = useState(-1);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,6 +45,7 @@ const App = () => {
     const emp = list.find((emp) => emp.id === id);
     setEmployee(emp);
     setEditId(id)
+    navigate("/")
   }
 
 
