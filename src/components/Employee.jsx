@@ -10,7 +10,7 @@ const Employee = (props) => {
         <div className="row">
           <div className="col-md-6 mx-auto mt-5">
             <form onSubmit={onSubmit}>
-            <h2>Employee Data</h2>
+            <h2 className="text-center">Employee Data :</h2>
             <div className="mb-3">
               <label htmlFor="Name" className="form-label fw-bold">
                 Name :
@@ -22,6 +22,7 @@ const Employee = (props) => {
                 name="ename"
                 value={employee.ename || ""}
                 onChange={onChange}
+                required
               />
             </div>
             <div className="mb-3">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Employee from "./components/Employee";
 import EmployeeData from "./components/EmployeeData";
@@ -9,6 +9,12 @@ const App = () => {
   const [list, setList] = useState([]);
   const [editId,setEditId] = useState(-1);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let oldEmployee = JSON.parse(localStorage.getItem("Employee")) || [];
+    setList(oldEmployee);
+  }, []);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;

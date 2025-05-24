@@ -8,6 +8,7 @@ const EmployeeData = (props) => {
       <div className="container">
         <div className="row">
           <div className="col-md-8 mx-auto mt-5">
+            <h2 className="text-center mb-4">Employee Detail :</h2>
             <table className="table table-striped">
               <thead>
                 <tr>
