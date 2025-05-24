@@ -1,34 +1,77 @@
-import React, { useState } from 'react'
-import Header from './components/Header'
-import Employee from './components/Employee'
+import React, { useState } from "react";
+import Header from "./components/Header";
+import Employee from "./components/Employee";
+import EmployeeData from "./components/EmployeeData";
+import { Route, Routes } from "react-router-dom";
 
 const App = () => {
-
   const [employee, setEmployee] = useState({});
   const [list, setList] = useState([]);
+  const [editId,setEditId] = useState(-1);
 
-  const handleChange = (e)=>{
-    const {name,value} = e.target
-    setEmployee({...employee,[name]:value})
-  }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEmployee({ ...employee, [name]: value });
+  };
 
-  const handleSubmit = (e)=>{
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setList([...list,{...employee,id : Date.now()}]);
-    setEmployee({})
+
+    if(editId == -1){
+      let data = [...list, { ...employee, id: Date.now() }]
+      setList(data);
+      localStorage.setItem("Employee", JSON.stringify(data))
+    }
+    else{
+      const updatedList = list.map((emp) =>
+        emp.id === editId ? { ...emp, ...employee } : emp
+      );
+      setList(updatedList);
+      localStorage.setItem("Employee", JSON.stringify(updatedList))
+      setEditId(-1)
+    }
+    
+    setEmployee({});
+  };
+
+  const handleDelete = (id)=>{
+    const data = list.filter((emp) => emp.id !== id);
+    setList(data);
+    localStorage.setItem("Employee", JSON.stringify(data));
   }
-  console.log(list)
-  
+
+  const handleEdit = (id)=>{
+    const emp = list.find((emp) => emp.id === id);
+    setEmployee(emp);
+    setEditId(id)
+  }
+
+
   return (
     <>
-      <Header/>
-      <Employee 
-      employee={employee}
-      list={list}
-      onChange={handleChange}
-      onSubmit={handleSubmit}/>
+      <Header />
+      <Routes>
+        <Route
+        path="/"
+          element={
+            <Employee
+              employee={employee}
+              onChange={handleChange}
+              onSubmit={handleSubmit}
+            />
+          }
+        />
+        <Route
+        path="view" 
+        element={
+          <EmployeeData
+          handleDelete = {handleDelete}
+          handleEdit = {handleEdit}
+          list = {list}
+          />}/>
+      </Routes>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
